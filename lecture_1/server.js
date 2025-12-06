@@ -6,7 +6,7 @@ app.get('/', (req, res) => {
   res.send('Hello World ! Welcome to our server! wth nodemon')
 })
 app.get('/chicken', (req, res) => {
-  res.send('i love chicken!')
+  res.send('i love chicken biryani!')
 })
 app.get('/dosa', (req, res) => {
   let customizedDosa = {
