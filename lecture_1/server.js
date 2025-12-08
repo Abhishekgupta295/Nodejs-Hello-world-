@@ -18,6 +18,9 @@ app.get('/dosa', (req, res) => {
   res.send(customizedDosa);
 })
 
+app.post('/items', (req, res) => {
+  res.send('This is a POST request for Dosa');
+});
 app.listen(3000, ( )=> {
   console.log('Server is running on port 3000!');
 });
