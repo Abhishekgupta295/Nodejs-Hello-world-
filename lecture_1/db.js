@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 
-const mongoURL = 'mongodb://localhost:27017/newhotels';
-
-mongoose.connect(mongoURL)
+// const mongoLocalURL = 'process.env.MONGO_LOCAL_URL'; // Local MongoDB URL
+// const mongoatlasURL = 'mongodb+srv://guptaabhi2952nd:Abhi1234mongodbatlas@cluster0.jiepsd2.mongodb.net/'; // MongoDB Atlas URL
+const mongoAtlasURL = process.env.MONGO_ATLAS_URL;
+mongoose.connect(mongoAtlasURL)
 
 const db = mongoose.connection;
 

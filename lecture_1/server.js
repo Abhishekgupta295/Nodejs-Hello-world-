@@ -1,5 +1,6 @@
 const express = require('express');
 const db = require('./db.js');
+require('dotenv').config(); // Load environment variables from .env file in our server.js file
 
 const bodyParser = require('body-parser');
 
@@ -27,9 +28,6 @@ app.get('/', (req, res) => {
 // app.post('/items', (req, res) => {
 //   res.send('This is a POST request for Dosa');
 // });
-app.listen(3000, ( )=> {
-  console.log('Server is running on port 3000!');
-});
 
 
 //importing PersonRoutes and using it for /person route
@@ -42,6 +40,12 @@ app.use('/person', PersonRoutes)
 //importing MenuItemRoutes and using it for /menu route
 const MenuItemRoutes = require('./routes/MenuItemRoutes.js');
 app.use('/menuItem', MenuItemRoutes)
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, ( )=> {
+  console.log('Server is running on port 3000!');
+});
 
 
 
