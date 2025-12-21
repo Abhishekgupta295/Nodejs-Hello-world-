@@ -1,8 +1,8 @@
 const express = require('express');
 const db = require('./db.js');
-const Person = require('./models/person.js');
+
 const bodyParser = require('body-parser');
-const MenuItem = require('./models/MenuItem.js');
+
 
 const app = express();
 
@@ -31,59 +31,15 @@ app.listen(3000, ( )=> {
   console.log('Server is running on port 3000!');
 });
 
-//old way with callback
-// app.post('/person', (req,res) => {
 
-//   const personData = req.body; // assuming request body contains person data in JSON format coming from client in POST request
-//   const newPerson = new Person(personData); // creating new Person instance using mongoose model.
-//   newPerson.save((error, savedPerson) =>{
-//     if (error) {
-//       console.log('Error saving person:', error);
-//       return res.status(500).send('Error saving person to database');
-//     }
-//     else{
-//       console.log('Person saved successfully:', savedPerson);
-//        res.status(201).send(savedPerson);
-//     }
-   
-//   }) // saving the new person to the database
-
-// })
-
-//new way with async await
-app.post('/person', async (req,res) => {
-
-  try{
-
-    const personData = req.body; // assuming request body contains person data in JSON format coming from client in POST request
-    const newPerson = new Person(personData); // creating new Person instance using mongoose model.
-    const response = await newPerson.save();
-    res.status(200).send(response);
-    console.log('Person saved successfully:', response);
-
-  }
-  catch(error){
-    console.log('Error saving person:', error);
-    return res.status(500).send('Error saving person to database');
-  }
-
-  
-})
-
-app.get('/person', async(req,res) => {
-  try{
-      const data = await Person.find();
-      console.log('Persons data retrieved successfully:', data);
-      res.status(200).send(data);
-  }
-  catch(error){
-    console.log('Error saving person:', error);
-    return res.status(500).send('Error saving person to database');
-  }
-});
+//importing PersonRoutes and using it for /person route
+const PersonRoutes = require('./routes/PersonRoutes.js');
+app.use('/person', PersonRoutes)
 
 
-
+//importing MenuItemRoutes and using it for /menu route
+const MenuItemRoutes = require('./routes/MenuItemRoutes.js');
+app.use('/menuItem', MenuItemRoutes)
 
 
 
