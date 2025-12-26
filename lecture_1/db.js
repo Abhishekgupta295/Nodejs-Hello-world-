@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 require('dotenv').config();  // Load environment variables from .env file
-const mongoLocalURL = process.env.MONGO_LOCAL_URL; // Local MongoDB URLf
+//const mongoLocalURL = process.env.MONGO_LOCAL_URL; // Local MongoDB URLf
 
-//const mongoatlasURL = process.env.MONGO_ATLAS_URL;
+const mongoatlasURL = process.env.MONGO_ATLAS_URL;
 
 // if (!mongoatlasURL) {
 //   console.warn('MONGO_ATLAS_URL not set; skipping mongoose.connect. Set MONGO_ATLAS_URL in .env or use a local MongoDB URL.');
@@ -12,7 +12,7 @@ const mongoLocalURL = process.env.MONGO_LOCAL_URL; // Local MongoDB URLf
 //   });
 // }
 
-mongoose.connect(mongoLocalURL);
+mongoose.connect(mongoatlasURL);
 
 const db = mongoose.connection;
 
