@@ -12,7 +12,14 @@ const mongoatlasURL = process.env.MONGO_ATLAS_URL;
 //   });
 // }
 
-mongoose.connect(mongoatlasURL);
+mongoose.connect(mongoatlasURL, {
+  ssl: true,
+  retryWrites: true,
+  w: "majority"
+})
+.then(() => console.log("Connected to MongoDB successfully!"))
+.catch(err => console.error("MongoDB connection error:", err));
+
 
 const db = mongoose.connection;
 
