@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 require('dotenv').config();  // Load environment variables from .env file
-const mongoLocalURL = process.env.MONGO_LOCAL_URL; // Local MongoDB URL
+const mongoLocalURL = process.env.MONGO_LOCAL_URL; // Local MongoDB URLf
 
 //const mongoatlasURL = process.env.MONGO_ATLAS_URL;
 
