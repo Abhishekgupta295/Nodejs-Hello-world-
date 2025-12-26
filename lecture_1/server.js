@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 app.use(bodyParser.json());
+const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
   res.send('Hello World ! Welcome to our server! wth nodemon')
@@ -41,7 +42,7 @@ app.use('/person', PersonRoutes)
 const MenuItemRoutes = require('./routes/MenuItemRoutes.js');
 app.use('/menuItem', MenuItemRoutes)
 
-const PORT = process.env.PORT || 3000;
+
 
 app.listen(PORT, ( )=> {
   console.log('Server is running on port 3000!');
