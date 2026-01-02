@@ -1,6 +1,8 @@
 const express = require('express');
 const db = require('./db.js');
 require('dotenv').config(); // Load environment variables from .env file in our server.js file
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 const bodyParser = require('body-parser');
 
@@ -10,6 +12,13 @@ const app = express();
 app.use(bodyParser.json());
 const PORT = process.env.PORT || 3000;
 
+//middle ware function
+const loggingMiddleware = (req, res, next) => {
+  console.log(`[${new Date().toLocaleString()}] request for ${req.originalUrl} `);
+  next();
+}
+
+app.use(loggingMiddleware); // using the logging middleware for all routes
 app.get('/', (req, res) => {
   res.send('Hello World ! Welcome to our server! wth nodemon')
 })
@@ -42,7 +51,7 @@ app.use('/person', PersonRoutes)
 const MenuItemRoutes = require('./routes/MenuItemRoutes.js');
 app.use('/menuItem', MenuItemRoutes)
 
-
+//app.use(loggingMiddleware); // using the logging middleware for all routes
 
 app.listen(PORT, ( )=> {
   console.log('Server is running on port 3000!');
