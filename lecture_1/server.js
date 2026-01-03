@@ -1,8 +1,7 @@
 const express = require('express');
 const db = require('./db.js');
 require('dotenv').config(); // Load environment variables from .env file in our server.js file
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
+const passport = require('./auth.js');
 
 const bodyParser = require('body-parser');
 
@@ -12,6 +11,9 @@ const app = express();
 app.use(bodyParser.json());
 const PORT = process.env.PORT || 3000;
 
+
+app.use(passport.initialize());
+
 //middle ware function
 const loggingMiddleware = (req, res, next) => {
   console.log(`[${new Date().toLocaleString()}] request for ${req.originalUrl} `);
@@ -19,9 +21,12 @@ const loggingMiddleware = (req, res, next) => {
 }
 
 app.use(loggingMiddleware); // using the logging middleware for all routes
+
+const localAuthMiddleware = passport.authenticate('local', {session : false});
 app.get('/', (req, res) => {
   res.send('Hello World ! Welcome to our server! wth nodemon')
 })
+
 // app.get('/chicken', (req, res) => {
 //   res.send('i love chicken biryani!')
 // })
@@ -42,10 +47,10 @@ app.get('/', (req, res) => {
 
 //importing PersonRoutes and using it for /person route
 const PersonRoutes = require('./routes/PersonRoutes.js');
-app.use('/person', PersonRoutes)
+app.use('/person',PersonRoutes)
 
 
-
+// ,localAuthMiddleware 
 
 //importing MenuItemRoutes and using it for /menu route
 const MenuItemRoutes = require('./routes/MenuItemRoutes.js');
