@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Person = require('../models/person');
+const { jwtAuthMiddleware, generateToken } =  require('../jwt');
 
 
 //old way with callback
@@ -23,14 +24,24 @@ const Person = require('../models/person');
 // })
 
 //new way with async await
-router.post('/', async (req,res) => {
+router.post('/signup', async (req,res) => {
 
   try{
 
     const personData = req.body; // assuming request body contains person data in JSON format coming from client in POST request
     const newPerson = new Person(personData); // creating new Person instance using mongoose model.
     const response = await newPerson.save();
-    res.status(200).send(response);
+
+    const payload = {
+        id : response.id,
+        username : response.username,
+    }
+
+    console.log('Payload for JWT:', payload);
+    
+    const token = generateToken(payload); // generating JWT token for the newly created user
+    console.log('Generated JWT Token:', token);
+    res.status(200).send({ response : response, token : token}); // sending response along with token to client
     console.log('Person saved successfully:', response);
 
   }
